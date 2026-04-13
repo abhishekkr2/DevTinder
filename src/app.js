@@ -1,24 +1,21 @@
+//MIDDDLEWARE
+
 const express = require("express");
 
 const app= express();
+//one route can have multiple route handler
 
-// routing creation 
-//order of routes matter
-// app.use("/test",(req,res) =>{
-// res.send("no test cases");
-// });
-
-app.get("/user",(req,res) =>{
-res.send({firstname:"abhishek",lastname:"kumar"});
-});
-
-app.post("/user",(req,res) =>{
-res.send("data saved successfully to database");
-});
-
-app.delete("/user",(req,res) =>{
-res.send("data deleted successfully from database");
-});
+    app.use("/user",
+    (req,res,next)=>{
+        console.log("handling 1");
+        res.send("response!!!");
+        next();
+    },
+    (req,res,next)=>{
+         console.log("handling 2");
+        res.send('response 2 !!!');
+        
+    })
 
 app.listen(1000,()=>{
     console.log(" server stated");
