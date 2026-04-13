@@ -5,17 +5,16 @@ const express = require("express");
 const app= express();
 //one route can have multiple route handler
 
-    app.use("/user",
-    (req,res,next)=>{
-        console.log("handling 1");
-        res.send("response!!!");
-        next();
-    },
-    (req,res,next)=>{
-         console.log("handling 2");
-        res.send('response 2 !!!');
-        
-    })
+const {adminAuth}=require("./middlewares/auth")
+  app.use("/admin",adminAuth);
+
+    app.get("/admin/getalldata",(req,res)=>{
+      res.send("All Data Fetched");  
+    });
+
+    app.get("/admin/deletedata",(req,res)=>{
+        res.send("deleted a Data");
+    });
 
 app.listen(1000,()=>{
     console.log(" server stated");
