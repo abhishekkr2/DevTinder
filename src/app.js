@@ -3,18 +3,27 @@
 const express = require("express");
 
 const app= express();
-//one route can have multiple route handler
+// correct way
 
-const {adminAuth}=require("./middlewares/auth")
-  app.use("/admin",adminAuth);
+    app.use("/user",(req,res)=>{
 
-    app.get("/admin/getalldata",(req,res)=>{
-      res.send("All Data Fetched");  
-    });
+    try{
+        throw new Error("hjshd");
+        res.send("user data sent");
+    }
+    catch{
+         res.status(500).send("something went wrong");
+    }
+});
 
-    app.get("/admin/deletedata",(req,res)=>{
-        res.send("deleted a Data");
-    });
+//or only used for all 
+
+
+// app.use("/user",(err,req,res,next)=>{
+//     if(err){
+//         res.status(500).send("something went wrong");
+//     }
+// });
 
 app.listen(1000,()=>{
     console.log(" server stated");
