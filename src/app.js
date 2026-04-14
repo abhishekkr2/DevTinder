@@ -1,4 +1,7 @@
 //database and mongoose
+
+//req.body.userId-- here userId should match schema
+
 const dns=require('dns/promises');
 dns.setServers(["8.8.8.8","1.1.1.1"])
 
@@ -44,6 +47,33 @@ app.get("/feed",async (req,res)=>{
      try{
      const users =await User.find({});
      res.send(users);
+     }
+     catch(err){
+          res.status(400).send("something went wrong");
+     }
+});
+
+//delete api
+app.delete("/user",async (req,res)=>{
+     const userId=req.body.userId;
+
+      try{
+     const users =await User.findByIdAndDelete(userId);
+     res.send("user deleted successfully");
+     }
+     catch(err){
+          res.status(400).send("something went wrong");
+     }
+});
+
+//update user
+
+app.patch("/user",async (req,res)=>{
+     const userId=req.body.userId;
+     const data = req.body;
+     try{
+          const users=await User.findByIdAndUpdate(userId,data);
+          res.send("user updated successfully");
      }
      catch(err){
           res.status(400).send("something went wrong");
