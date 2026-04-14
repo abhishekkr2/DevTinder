@@ -8,6 +8,7 @@ const User=require('./model/user');
 const app= express();
 app.use(express.json());  //convert json=>js obj
 
+//sign up - addind user to db
 app.post("/signup",async (req,res)=>{
 
      //create new instance of user model
@@ -19,6 +20,34 @@ app.post("/signup",async (req,res)=>{
           res.status(400).send("error: user not added" + err.message);
      }
      
+});
+
+//search user by email
+app.get("/email",async (req,res)=>{
+     const useremail=req.body.emailID;
+     try{
+          const users= await User.find({emailID:useremail});
+          if(users.length === 0){
+               res.status(404).send("user not found");
+          }else{
+          res.send(users);
+          }
+     }
+     catch(err){
+          res.status(400).send("something went wrong");
+     }
+     
+});
+
+//feed API - get all user
+app.get("/feed",async (req,res)=>{
+     try{
+     const users =await User.find({});
+     res.send(users);
+     }
+     catch(err){
+          res.status(400).send("something went wrong");
+     }
 });
 
 
