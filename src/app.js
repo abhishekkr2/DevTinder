@@ -6,16 +6,12 @@ const express = require("express");
 const connectDB=require("./config/database");
 const User=require('./model/user');
 const app= express();
+app.use(express.json());  //convert json=>js obj
 
 app.post("/signup",async (req,res)=>{
 
      //create new instance of user model
- const user=new User({
-     firstName:"abhishek",
-     lastName:"kumar",
-     emailID:"abhi@gmail.com",
-     password:"abhi@123"
-     });
+ const user=new User(req.body);
       
      try{await user.save();
      res.send("user added successfully");
@@ -24,8 +20,6 @@ app.post("/signup",async (req,res)=>{
      }
      
 });
-
-
 
 
 connectDB()
