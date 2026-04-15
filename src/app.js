@@ -8,6 +8,7 @@ dns.setServers(["8.8.8.8","1.1.1.1"])
 const express = require("express");
 const connectDB=require("./config/database");
 const User=require('./model/user');
+const { error } = require('console');
 const app= express();
 app.use(express.json());  //convert json=>js obj
 
@@ -72,11 +73,12 @@ app.patch("/user",async (req,res)=>{
      const userId=req.body.userId;
      const data = req.body;
      try{
-          const users=await User.findByIdAndUpdate(userId,data);
+          const users=await User.findByIdAndUpdate(userId,data,{runValidators :true});
           res.send("user updated successfully");
+          
      }
      catch(err){
-          res.status(400).send("something went wrong");
+          res.status(400).send("update failed : " + err.message);
      }
 });
 
