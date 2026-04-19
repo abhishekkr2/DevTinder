@@ -1,22 +1,7 @@
-// const adminAuth=(req,res,next)=>{
-    // const token="abhi";
-    // const isauthorized=token==="abhi";
-
-
-
-    
-    // if(!isauthorized){
-    //     res.status(401).send("unauthorized request");
-    // }
-    // next();
-    // };
-
-    // module.exports={adminAuth};
-
-
     
     const jwt = require("jsonwebtoken");
     const User=require("../model/user")
+    
 
   
         const userAuth = async(req,res,next)=>{
