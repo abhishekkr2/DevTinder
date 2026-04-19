@@ -1,7 +1,5 @@
 
 const validator=require('validator');
-// const { default: isEmail } = require('validator/lib/isEmail');
-// const { default: isStrongPassword } = require('validator/lib/isStrongPassword');
 validatesignup=(req)=>{
     const{firstName,lastName,emailID,password}=req.body;
     
