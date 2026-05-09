@@ -14,6 +14,7 @@ const {validatesignup}=require('./utils/validation');
 const profileRouter =require("./routes/auth");
 const requestRouter= require("./routes/request");
 const authRouter = require("./routes/profile");
+const userRouter = require("./routes/user");
 
 
 const app= express();
@@ -23,6 +24,8 @@ app.use(cookieparser());
 app.use("/",authRouter); //or just app.use(authRouter)
 app.use("/",profileRouter);
 app.use("/",requestRouter);
+app.use("/",userRouter);
+
 
 
 

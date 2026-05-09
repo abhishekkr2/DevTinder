@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
+
 const { equals } = require('validator');
 const connectionRequestSchema = mongoose.Schema({
 
     fromUserId :{
         type : mongoose.Schema.Types.ObjectId,
         required : true,
+        ref : "user",   // refrence relation to user schema
     },
 
     toUserId :{
         type: mongoose.Schema.Types.ObjectId,
         required : true,
+        ref : "user",
     },
 
     status : {

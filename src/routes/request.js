@@ -5,6 +5,7 @@ const {userAuth} = require("../middlewares/auth");
 const ConnectionRequest = require("../model/connectionRequest");
 const User = require("../model/user");
 
+// api for status-> interested or ignored 
 requestRouter.post("/request/send/:status/:toUserId",userAuth,async(req,res)=>{    // here userauth verify
 //  the log in user and attah that user with req like (req.user = user) and that log in user is attached to req means 
 // as it store the login user and  id is fetched from (req.user._id) 
@@ -55,6 +56,41 @@ requestRouter.post("/request/send/:status/:toUserId",userAuth,async(req,res)=>{ 
    catch(err){
         res.status(400).send("Error :" + err. message);
    }
+});
+
+// api for status -> accepted or rejected
+requestRouter.post("/request/review/:status/:requestId", userAuth, async(req,res) => {
+    try{
+      const loggedinuser = req.user; 
+      const {status,requestId} = req.params;
+      
+      const allowedStatus = ["accepted","rejected"];
+      if(!allowedStatus.includes(status)){
+        return res.status(400).json({message : "status not allowed"});
+      }
+
+      const connectionRequest=await ConnectionRequest.findOne({
+        _id : requestId,
+        toUserId : loggedinuser._id,
+        status : "interested",
+      })
+
+      if(!connectionRequest){
+        return res.status(404).json({message : "connection request not found"});
+      }
+      connectionRequest.status=status;
+    
+      const data = await connectionRequest.save();
+
+      res.json({ message : " connection request " + status ,data});
+
+
+    }
+    catch(err){
+        res.status(400).send("ERROR :" + err.message);
+    }
+   
+
 });
 
 module.exports = requestRouter;
