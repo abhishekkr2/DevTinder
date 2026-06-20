@@ -6,7 +6,8 @@ var validator = require('validator');
 const jwt = require("jsonwebtoken");
 
 
-const userSchema=mongoose.Schema({
+const userSchema=mongoose.Schema(
+      {
     firstName : {
         type:String,
         required:true,
@@ -46,6 +47,7 @@ const userSchema=mongoose.Schema({
 
     gender : {
           type:String,
+          default :"male",
           validate(value){
             if(!["male","female","others"].includes(value)){
                   throw new Error("gender not valid")
@@ -54,13 +56,20 @@ const userSchema=mongoose.Schema({
     },
 
     skills : {
+      
       type:[String],
-    }
+      default : [],
+    },
+    
+    photoUrl: {
+  type: String,
+  default: "https://cdn-icons-png.flaticon.com/512/149/149071.png", // default avatar
+},
   
 },
-{
-      timestamp:true,
-});
+
+      {timestamps:true}
+);
 
 userSchema.methods.getJWT= async function ()  {
       const user =this;

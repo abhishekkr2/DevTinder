@@ -5,16 +5,16 @@ const {validateProfileEditData}=require("../utils/validation")
 
 const profileRouter = express.Router();
 
-//profile
+//profile view
 profileRouter.get("/profile/view",userAuth,async(req,res)=>{
           try {
      const user = req.user;
-     res.send(user);} //attached user used
+     res.json(user);} //attached user used
      catch(err){
           res.status(400).send("error: " + err.message);
      }
      
-});
+}); 
 
 //Profile update
 profileRouter.patch("/profile/edit",userAuth,async(req,res)=>{

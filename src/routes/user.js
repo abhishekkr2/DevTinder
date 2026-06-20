@@ -14,7 +14,7 @@ try{
     const connectionRequests = await ConnectionRequest.find({
         toUserId : loggedinuser._id,
         status : "interested"
-    }).populate("fromUserId", ["firstName", "lastName"]);  // fetch the name from user schema
+    }).populate("fromUserId", ["firstName", "lastName","photoUrl","skills","gender","age"]);  // fetch the name from user schema
 
     res.json({message : " data fetched successfully",
         data: connectionRequests,
@@ -37,8 +37,8 @@ userRouter.get("/user/connections" , userAuth, async (req,res) => {
                 {toUserId : loggedinuser._id, status :"accepted"},
                 {fromUserId : loggedinuser._id, status : "accepted"},
             ],
-        }).populate("fromUserId", ["firstName", "lastName"])
-         .populate("toUserId", ["firstName", "lastName"]);
+        }).populate("fromUserId", ["firstName", "lastName","photoUrl"])
+         .populate("toUserId", ["firstName", "lastName","photoUrl"]);
 
 
         const data = connectionRequest.map((row) => {
@@ -80,7 +80,7 @@ userRouter.get("/user/feed", userAuth, async(req,res) => {
             $and : [
                 {_id : { $nin : Array.from(hideUserFromFeed)}},
                 {_id : { $ne : loggedinuser._id}}, ]
-        }).select("firstName lastName").skip(skip).limit(limit);
+        }).select("firstName lastName age gender skills photoUrl").skip(skip).limit(limit);
         
         res.send(users);
     }

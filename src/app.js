@@ -9,15 +9,22 @@ const express = require("express");
 const connectDB=require("./config/database");
 const cookieparser=require('cookie-parser');
 const {validatesignup}=require('./utils/validation');
+const cors = require('cors')
+const app= express();
 
 
-const profileRouter =require("./routes/auth");
+const profileRouter =require("./routes/profile");
 const requestRouter= require("./routes/request");
-const authRouter = require("./routes/profile");
+const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 
 
-const app= express();
+
+app.use(cors(
+     {origin : "http://localhost:5173",
+          credentials : true,
+     }
+));
 app.use(express.json());  //convert json=>js obj
 app.use(cookieparser());
 

@@ -23,8 +23,11 @@ authRouter.post("/signup",async (req,res)=>{
      //create new instance of user model
       const user=new User({firstName,lastName,emailID,password:passwordHash});
       
-     await user.save();
-     res.send("user added successfully");
+    const savedUser = await user.save();
+    const token = await savedUser.getJWT()
+          //Add Tooken to cookies and send back to user
+          res.cookie("token",token);
+     res.json({message:"user added successfully",data:savedUser});
      }
      catch(err){
           res.status(400).send("error: user not added : " + err.message);
@@ -38,7 +41,7 @@ authRouter.post("/Login",async(req,res) =>{
           const {emailID,password}=req.body;
          const user = await User.findOne({emailID:emailID}) ;
          if(!user){
-          throw new Error("user not found");
+          throw new Error("invalid credentials");
          }
          const ispasswordValid = await bcrypt.compare(password,user.password);
          if(ispasswordValid){
@@ -47,10 +50,10 @@ authRouter.post("/Login",async(req,res) =>{
           //Add Tooken to cookies and send back to user
           res.cookie("token",token);
 
-          res.send("Login Successfully");
+          res.json(user);
          }
          else{
-          throw new Error("password Incorrect");
+          throw new Error("invalid credentials");
          }
      
      }

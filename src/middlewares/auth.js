@@ -9,7 +9,7 @@
     // read the token from req.cookies
     const {token}=req.cookies;
         if(!token){
-            throw new Error("token not found");
+            return res.status(401).send("Please Log in")
         }
         //validate
      const decodeobj = await jwt.verify(token,"DEV@Tinder$790");
@@ -26,11 +26,8 @@
       
     catch(err){
        res.status(400).send("error :" + err.message);
-    };
-      
+    };  
     }
-     
-     //find user
     
      module.exports={userAuth};
    
