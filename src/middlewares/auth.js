@@ -12,7 +12,7 @@
             return res.status(401).send("Please Log in")
         }
         //validate
-     const decodeobj = await jwt.verify(token,"DEV@Tinder$790");
+     const decodeobj = await jwt.verify(token,process.env.JWT_SECRET);
      const{_id}=decodeobj;
 
      const user = await User.findById(_id)
