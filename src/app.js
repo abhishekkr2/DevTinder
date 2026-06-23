@@ -2,9 +2,12 @@
 
 //req.body.userId-- here userId should match schema
 
+require('dotenv').config();
+
+const PORT = process.env.PORT || 7777;
 const dns=require('dns/promises');
 dns.setServers(["8.8.8.8","1.1.1.1"])
-const PORT = process.env.PORT || 7777;
+
 
 const express = require("express");
 const connectDB=require("./config/database");
