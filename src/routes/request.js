@@ -4,6 +4,7 @@ const requestRouter = express.Router();
 const {userAuth} = require("../middlewares/auth");
 const ConnectionRequest = require("../model/connectionRequest");
 const User = require("../model/user");
+const sendEmail = require("../utils/sendEmail");
 
 // api for status-> interested or ignored 
 requestRouter.post("/request/send/:status/:toUserId",userAuth,async(req,res)=>{    // here userauth verify
@@ -46,6 +47,13 @@ requestRouter.post("/request/send/:status/:toUserId",userAuth,async(req,res)=>{ 
     });
 
     const data = await connectionRequest.save();
+
+    const emailRes = await sendEmail.run(
+          "New connection request!",                          // subject
+  `${req.user.firstName} is interested in you`,      // body
+  toUser.emailId  
+    );
+    console.log(emailRes);
 
     res.json({
         message : req.user.firstName + " is " + status +" in "+ toUser.firstName,

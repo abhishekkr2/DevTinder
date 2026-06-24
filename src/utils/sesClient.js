@@ -1,0 +1,12 @@
+require('dotenv').config();
+const { SESClient, SendEmailCommand } = require("@aws-sdk/client-ses");
+
+const sesClient = new SESClient({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET
+  },
+});
+
+module.exports = {sesClient};
