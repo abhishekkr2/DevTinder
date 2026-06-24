@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 7777;
 const dns=require('dns/promises');
 dns.setServers(["8.8.8.8","1.1.1.1"])
 
-
+require("./utils/cronJobs");
 const express = require("express");
 const connectDB=require("./config/database");
 const cookieparser=require('cookie-parser');
