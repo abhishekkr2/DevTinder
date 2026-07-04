@@ -27,7 +27,7 @@ A full-stack developer networking/matchmaking platform — "Tinder for developer
 | Validation | validator.js |
 | Email | AWS SES (`@aws-sdk/client-ses`) |
 | Scheduling | node-cron, date-fns |
-| Deployment | AWS EC2, Nginx (reverse proxy), PM2, Certbot (SSL), GoDaddy (domain) |
+| Deployment | AWS EC2, Nginx (reverse proxy), PM2, Cloudflare (SSL/CDN/DNS proxy), GoDaddy (domain) |
 
 ---
 
@@ -129,7 +129,7 @@ Deployed on **AWS EC2 (Ubuntu)** with:
 - **PM2** for process management and auto-restart on reboot
 - **Elastic IP** for a stable public address
 - **Custom domain** (`devtinder.quest`) via GoDaddy
-- **SSL/TLS** via Certbot (Let's Encrypt)
+- **SSL/TLS** via  Cloudflare (SSL/CDN/DNS proxy)
 
 ---
 
