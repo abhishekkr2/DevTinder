@@ -9,7 +9,7 @@ const {userAuth} = require("../middlewares/auth")
 
 const authRouter = express.Router();
 
-//sign up - addind user to db
+//sign up - adding user to db
 authRouter.post("/signup",async (req,res)=>{
 
      try{
@@ -39,7 +39,7 @@ authRouter.post("/signup",async (req,res)=>{
 authRouter.post("/Login",async(req,res) =>{
      try{
           const {emailID,password}=req.body;
-         const user = await User.findOne({emailID:emailID}) ;
+         const user = await User.findOne({emailID:emailID}).select("+password") ;
          if(!user){
           throw new Error("invalid credentials");
          }
@@ -49,7 +49,7 @@ authRouter.post("/Login",async(req,res) =>{
                const token = await user.getJWT()
           //Add Tooken to cookies and send back to user
           res.cookie("token",token);
-
+     
           res.json(user);
          }
          else{

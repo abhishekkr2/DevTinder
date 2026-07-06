@@ -49,5 +49,5 @@ const run = async (subject, body, toEmailId) => {
   }
 };
 
-// snippet-end:[ses.JavaScript.email.sendEmailV3]
+
 module.exports = { run };
